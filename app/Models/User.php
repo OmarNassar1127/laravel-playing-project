@@ -3,10 +3,14 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Post;
+use App\Models\Role;
+use App\Models\Photo;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+
 
 class User extends Authenticatable
 {
@@ -32,6 +36,24 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function post(){
+        return $this->hasOne(Post::class);
+    }
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
+
+    public function photos(){
+        return $this->morphMany(Photo::class, 'imageable');
+    }
+
+    public function roles(){
+        return $this->belongsToMany(Role::class)->withTimestamps();
+
+        //customize table names and columns
+        // return $this->belongsToMany(Role::class, ['user_roles', 'user_id', 'role_id'] );
+    }
 
     /**
      * The attributes that should be cast.
