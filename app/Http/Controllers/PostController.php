@@ -58,6 +58,11 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+        
         $user = User::findOrFail(1);
         $data = $request->all();
         $data['user_id'] = $user->id;

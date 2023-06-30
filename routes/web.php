@@ -282,8 +282,10 @@ use App\Http\Controllers\PostController;
 |--------------------------------------------------------------------------
 |
 */
-Route::resource('/posts', PostController::class);
-
+Route::group(['middleware' => 'web'], function(){
+  Route::resource('/posts', PostController::class);
+  
+});
 
 
 

@@ -17,6 +17,15 @@
       {!! Form::submit('Create Post', ['class'=> 'btn btn-primary'])!!}
       {!! Form::close() !!}
     </div>
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+          @foreach ($errors->all() as $error)
+              <ul>
+                <li>{{$error}}</li>
+              </ul>
+          @endforeach
+        </div>
+    @endif
 
 
     {{-- <input type="text" name="title" placeholder="Enter title">
