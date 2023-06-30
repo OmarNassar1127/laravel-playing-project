@@ -276,3 +276,26 @@ use App\Http\Controllers\PostController;
 //         echo $video->name;
 //     }
 // });
+/*
+|--------------------------------------------------------------------------
+| Crud Application
+|--------------------------------------------------------------------------
+|
+*/
+Route::resource('/posts', PostController::class);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

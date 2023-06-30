@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -11,17 +13,36 @@ class PostController extends Controller
         return view('contact', ['people' => $people]);
     }
 
-    public function showPost($id){
-        return view('post', ['id' => $id]);
+    public function show($id){
+        $post = Post::findOrFail($id);
+        return view('/posts.show', compact('post'));
+    }
+
+    public function index(){
+        $posts = Post::all();
+        return view('posts.index', compact('posts'));
+    }
+    
+    public function destroy($id){
+        $post = Post::findOrFail($id);
+        $post->delete();
+        return redirect('/posts');
+    }
+
+    public function update(Request $request, $id){
+        $post = Post::findOrFail($id);
+        $post->update($request->all());
+        return redirect('/posts');
     }
     /**
      * Display a listing of the resource.
      */
-    public function index($id)
-    {
-        return "Hello from the controller " . $id;
-        //
-    }
+
+     public function edit($id){
+        $post = Post::findOrFail($id);
+        return view('posts.edit', compact('post'));
+     }
+ 
 
     /**
      * Show the form for creating a new resource.
@@ -29,7 +50,7 @@ class PostController extends Controller
     public function create()
     {
         //
-        return "I am the method that creates stuff";
+        return view('posts.create');
     }
 
     /**
@@ -37,41 +58,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $data['user_id'] = 1;
+        Post::create($data);
+        return redirect('/posts');
     }
+
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-        return "This is the show method " . $id ;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-        return "You're going to edit the post with the id number of " . $id;
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+    
 
 }
