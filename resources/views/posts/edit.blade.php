@@ -3,18 +3,37 @@
 @section('content')
 <h1>Edit post</h1>
 <div>
-  <form action="/posts/{{$post->id}}" method="POST">
+
+
+  {{-- <form action="/posts/{{$post->id}}" method="POST"> --}}
+        {{-- <input type="text" name="title" value="{{$post->title}}">
+    <input type="text" name="body" value="{{$post->body}}"> --}}
+    {{-- <input type="submit" value="Update">
+  </form> --}}
+    {!! Form::model($post ,['method' => 'PATCH', 'action' => ['App\Http\Controllers\PostController@update', $post->id] ]) !!}
+      @csrf
+      {!! Form::label('title', 'Title:') !!}
+      {!! Form::text('title', null, ['class' => 'form-controll']) !!}
+      <br>
+      {!! Form::label('body', 'Body:') !!}
+      {!! Form::text('body', null, ['class' => 'form-controll']) !!} 
+      <br>
+      {!! Form::submit('Update Post', ['class'=> 'btn btn-info'])!!}
+      {!! Form::close() !!}
+
+
+
+
+  {{-- <form action="/posts/{{$post->id}}" method="POST">
+    @csrf --}}
+    {{-- <input type="hidden" name="_method" value="DELETE">
+         <input type="submit" value="Delete">
+  </form> --}}
+  {!! Form::open(['method' => 'DELETE', 'action' => ['App\Http\Controllers\PostController@destroy', $post->id]]) !!}
     @csrf
-    <input type="hidden" name="_method" value="PUT">
-    <input type="text" name="title" value="{{$post->title}}">
-    <input type="text" name="body" value="{{$post->body}}">
-    <input type="submit" value="Update">
-  </form>
-  <form action="/posts/{{$post->id}}" method="POST">
-    @csrf
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="submit" value="Delete">
-  </form>
+    {!! Form::submit('Delete Post', ['class'=> 'btn btn-danger'])!!}
+    {!! Form::close() !!}
+
 </div>
 @endsection
 
