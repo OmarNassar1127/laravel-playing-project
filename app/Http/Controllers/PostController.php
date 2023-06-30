@@ -58,8 +58,9 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $user = User::findOrFail(1);
         $data = $request->all();
-        $data['user_id'] = 1;
+        $data['user_id'] = $user->id;
         Post::create($data);
         return redirect('/posts');
     }
