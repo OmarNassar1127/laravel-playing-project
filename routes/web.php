@@ -293,6 +293,19 @@ Route::group(['middleware' => 'web'], function(){
     echo '<br>';
     echo Carbon::now();
   });
+
+  Route::get('/getName', function(){
+    $user = User::findOrFail(1);
+    echo $user->name;
+  });
+  
+  Route::get('/setName', function(){
+    $user = User::findOrFail(1);
+    $user->name = 'trabuco';
+    $user->save();
+    return 'Name set successfully';
+  });
+
   
 });
 

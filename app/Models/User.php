@@ -44,15 +44,23 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    
     public function photos(){
         return $this->morphMany(Photo::class, 'imageable');
     }
-
+    
     public function roles(){
         return $this->belongsToMany(Role::class)->withTimestamps();
-
+        
         //customize table names and columns
         // return $this->belongsToMany(Role::class, ['user_roles', 'user_id', 'role_id'] );
+    }
+    public function getNameAttribute($value){
+        return ucfirst($value);
+    }
+    
+    public function setNameAttribute($value){
+        return $this->attributes['name'] = strtoupper($value);
     }
 
     /**
