@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Photo;
 use App\Models\Video;
 use App\Models\Country;
+use Carbon\Carbon;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -283,7 +284,15 @@ use App\Http\Controllers\PostController;
 |
 */
 Route::group(['middleware' => 'web'], function(){
+
   Route::resource('/posts', PostController::class);
+
+  Route::get('/dates', function(){
+    $date = new DateTime('+1 week');
+    echo $date->format('m-d-Y');
+    echo '<br>';
+    echo Carbon::now();
+  });
   
 });
 
