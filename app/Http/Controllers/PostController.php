@@ -63,12 +63,22 @@ class PostController extends Controller
         //     'title' => 'required',
         //     'body' => 'required'
         // ]);
+
+       $file = $request->file('file');
+
+       echo "<br>";
+
+       echo $file->getClientOriginalName();
+
+       echo "<br>";
+
+       echo $file->getClientOriginalExtension();
         
-        $user = User::findOrFail(1);
-        $data = $request->all();
-        $data['user_id'] = $user->id;
-        Post::create($data);
-        return redirect('/posts');
+        // $user = User::findOrFail(1);
+        // $data = $request->all();
+        // $data['user_id'] = $user->id;
+        // Post::create($data);
+        // return redirect('/posts');
     }
 
 
