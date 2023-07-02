@@ -69,6 +69,7 @@ class PostController extends Controller
         }
         $input['user_id'] = $user->id;
         Post::create($input);
+        return redirect('/posts');
         // $this->validate($request, [
         //     'title' => 'required',
         //     'body' => 'required'
@@ -77,7 +78,6 @@ class PostController extends Controller
         // $data = $request->all();
         // $data['user_id'] = $user->id;
         // Post::create($data);
-        // return redirect('/posts');
 
     //    $file = $request->file('file');
 
