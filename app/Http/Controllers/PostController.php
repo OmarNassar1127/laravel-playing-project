@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\CreatePostRequest;
 
 class PostController extends Controller
@@ -30,11 +31,29 @@ class PostController extends Controller
         return redirect('/posts');
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $post = Post::findOrFail($id);
-        $post->update($request->all());
+        $input = $request->all();
+    
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $name = $file->getClientOriginalName();
+            $path = $file->storeAs('', $name, 'public');
+            $input['path'] = $path;
+    
+            if (!empty($post->path)) {
+                // Delete the existing image
+                Storage::disk('public')->delete($post->path);
+            }
+        }
+    
+        $post->update($input);
         return redirect('/posts');
     }
+    
+    
+
     /**
      * Display a listing of the resource.
      */

@@ -10,16 +10,26 @@
     <input type="text" name="body" value="{{$post->body}}"> --}}
     {{-- <input type="submit" value="Update">
   </form> --}}
-    {!! Form::model($post ,['method' => 'PATCH', 'action' => ['App\Http\Controllers\PostController@update', $post->id] ]) !!}
+    {!! Form::model($post, ['method' => 'PATCH', 'action' => ['App\Http\Controllers\PostController@update', $post->id], 'enctype' => 'multipart/form-data']) !!}
       @csrf
       {!! Form::label('title', 'Title:') !!}
-      {!! Form::text('title', null, ['class' => 'form-controll']) !!}
+      {!! Form::text('title', null, ['class' => 'form-control']) !!}
       <br>
       {!! Form::label('body', 'Body:') !!}
-      {!! Form::text('body', null, ['class' => 'form-controll']) !!} 
+      {!! Form::text('body', null, ['class' => 'form-control']) !!} 
       <br>
-      {!! Form::submit('Update Post', ['class'=> 'btn btn-info'])!!}
-      {!! Form::close() !!}
+      {!! Form::label('file', 'File:') !!}
+      {!! Form::file('file', ['class' => 'form-control']) !!}
+      <br>
+      @if (!empty($post->path))
+          <p>Current File: {{$post->path}}</p>
+      @else
+          <p>No file attached</p>
+      @endif
+      <br>
+      {!! Form::submit('Update Post', ['class' => 'btn btn-info']) !!}
+    {!! Form::close() !!}
+
 
 
 

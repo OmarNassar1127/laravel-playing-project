@@ -12,6 +12,7 @@ class Post extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    public $directory = "/images/";
 
     protected $dates = ['deleted_at'];
 
@@ -36,6 +37,12 @@ class Post extends Model
 
     public static function scopeLatest($query){
         return $query->orderBy('id', 'asc')->get();
+    }
+
+    public function getPathAttribute($value){
+
+        return $this->directory . $value;
+
     }
     
 }
